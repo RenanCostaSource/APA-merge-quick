@@ -60,12 +60,40 @@ const partition = (arrayInit, arrayEnd) => {
 }
 //################################################
 
+//################# MergeSort ####################
+const mergeSort = (S) => {
+    if (S.length < 2) return S
+    const mid = Math.floor(a.length / 2)
+    const S_bottom = a.slice(0, mid)
+    const S_top = S.slice(mid, S.length)
+    const sorted_bottom = mergeSort(S_bottom)
+    const sorted_top = mergeSort(S_top)
+    return merge(sorted_bottom, sorted_top)
+  }
+
+const merge = (a, b) => {
+    const c = []
+  
+    while (a.length && b.length) {
+      c.push(a[0] > b[0] ? b.shift() : a.shift())
+    }
+    while (a.length) {
+      c.push(a.shift())
+    }
+    while (b.length) {
+      c.push(b.shift())
+    }
+  
+    return c
+  }
+//###################################################
+
 const timeStart = performance.now();
 const sorted = algorithm===0 
     ? quickSort(0, array.length-1).filter(it =>{
         return it !== undefined;
     })
-    : []; 
+    : mergeSort(array); 
 const timeEnd = performance.now();
 //validates
 let worked = true;
