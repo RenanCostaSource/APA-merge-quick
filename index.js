@@ -7,16 +7,18 @@ const readLine = require('readline').createInterface({
 const algorithm = 0; // change this if you want to change the sort type 0 = quick | 1 = merge
 
 //Just change the name of the file to change the test case
-const file = fs.readFileSync('couting.txt', 'utf-8');
+const file = fs.readFileSync('num.100000.4.in', 'utf-8');
 const array = file.split('\r\n').map(it=>{
     return Number.parseInt(it);
 }).filter(it =>{
     return it !== undefined;
 });
 array.shift()
-let index = 0;
+
+
+//################### QuickSort #############################
 const quickSort = function quickSort (arrayInit, arrayEnd) {
-    index++;
+
    if(arrayInit<arrayEnd){
         let q = partition(arrayInit, arrayEnd);
         quickSort(arrayInit, q-1);
@@ -27,7 +29,6 @@ const quickSort = function quickSort (arrayInit, arrayEnd) {
 
 }
 const partition = (arrayInit, arrayEnd) => {
-    console.log(array.slice(arrayInit, arrayEnd))
     let x = array[arrayInit];
     let a = arrayInit+1;
     let b = arrayEnd;
@@ -57,23 +58,22 @@ const partition = (arrayInit, arrayEnd) => {
     }
 
 }
+//################################################
 
-const timeStart = (new Date).getMilliseconds();
+const timeStart = performance.now();
 const sorted = algorithm===0 
     ? quickSort(0, array.length-1).filter(it =>{
         return it !== undefined;
     })
     : []; 
-const timeEnd = (new Date).getMilliseconds();
+const timeEnd = performance.now();
 //validates
 let worked = true;
 for(let i = 0; i< sorted.length-1; i++){
     if(sorted[i] > sorted[i+1]){
-        console.log(sorted[i]+">"+ sorted[i+1] );
         worked = false;
     }
 }
-console.log(index);
 console.log("it worked? "+ worked);
 console.log("time spent:"+ (timeEnd-timeStart));
 
